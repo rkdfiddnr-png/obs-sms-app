@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0f0f1a"
+    android:padding="20dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- 헤더 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="💰 입금 알림 연동"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#ffffff"
+            android:layout_marginBottom="4dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="은행 입금 문자를 자동으로 OBS 시스템에 전송합니다"
+            android:textSize="13sp"
+            android:textColor="#8888aa"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- 상태 표시 -->
+        <TextView
+            android:id="@+id/tvStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="🔴 비활성화됨"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#f44336"
+            android:layout_marginBottom="20dp"/>
+
+        <!-- 활성화 스위치 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="#1e1e2e"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="자동 전송 활성화"
+                android:textSize="16sp"
+                android:textColor="#ffffff"/>
+
+            <Switch
+                android:id="@+id/swEnabled"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <!-- 서버 설정 카드 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="서버 설정"
+            android:textSize="14sp"
+            android:textColor="#8888aa"
+            android:layout_marginBottom="8dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#1e1e2e"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="API 서버 주소"
+                android:textSize="13sp"
+                android:textColor="#8888aa"
+                android:layout_marginBottom="6dp"/>
+
+            <EditText
+                android:id="@+id/etServerUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="http://서버주소/obs/api.php"
+                android:textColor="#ffffff"
+                android:textColorHint="#555566"
+                android:background="#2a2a3e"
+                android:padding="12dp"
+                android:textSize="13sp"
+                android:inputType="textUri"
+                android:layout_marginBottom="12dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="프로젝트 ID"
+                android:textSize="13sp"
+                android:textColor="#8888aa"
+                android:layout_marginBottom="6dp"/>
+
+            <EditText
+                android:id="@+id/etProjectId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="1"
+                android:textColor="#ffffff"
+                android:textColorHint="#555566"
+                android:background="#2a2a3e"
+                android:padding="12dp"
+                android:textSize="14sp"
+                android:inputType="number"/>
+        </LinearLayout>
+
+        <!-- 저장 버튼 -->
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:text="설정 저장"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#ffffff"
+            android:backgroundTint="#5c35cc"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- 수신 로그 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="최근 수신 기록"
+            android:textSize="14sp"
+            android:textColor="#8888aa"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvLog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="아직 수신된 입금 문자가 없습니다."
+            android:textSize="12sp"
+            android:textColor="#aaaacc"
+            android:background="#1e1e2e"
+            android:padding="16dp"
+            android:fontFamily="monospace"/>
+
+    </LinearLayout>
+</ScrollView>
