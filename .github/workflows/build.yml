@@ -13,10 +13,17 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+      - name: Create local.properties
+        run: echo "sdk.dir=$ANDROID_HOME" > local.properties
+      - name: Install Gradle and generate wrapper
+        run: |
+          sudo apt-get install -y gradle
+          gradle wrapper --gradle-version 8.2
+          chmod +x gradlew
       - name: Build Release APK
-        run: ./gradlew assembleRelease
+        run: ./gradlew assembleRelease --stacktrace
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
