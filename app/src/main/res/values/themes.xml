@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.ObsDonation" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="colorPrimary">#5c35cc</item>
+        <item name="colorPrimaryDark">#3a1fa0</item>
+        <item name="colorAccent">#7c4dff</item>
+        <item name="android:windowBackground">#0f0f1a</item>
+    </style>
+</resources>
