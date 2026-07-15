@@ -26,121 +26,118 @@
             android:text="은행 입금 문자를 자동으로 OBS 시스템에 전송합니다"
             android:textSize="13sp"
             android:textColor="#8888aa"
-            android:layout_marginBottom="24dp"/>
+            android:layout_marginBottom="20dp"/>
 
         <!-- 상태 표시 -->
         <TextView
             android:id="@+id/tvStatus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="🔴 비활성화됨"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="#f44336"
-            android:layout_marginBottom="20dp"/>
+            android:text="🟢 SMS 자동 전송 활성화됨"
+            android:textSize="15sp"
+            android:textColor="#4CAF50"
+            android:layout_marginBottom="16dp"/>
 
-        <!-- 활성화 스위치 -->
-        <LinearLayout
+        <!-- 자동 전송 토글 -->
+        <Switch
+            android:id="@+id/swEnabled"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:background="#1e1e2e"
-            android:padding="16dp"
-            android:layout_marginBottom="16dp">
+            android:text="자동 전송 활성화"
+            android:textColor="#ffffff"
+            android:textSize="16sp"
+            android:layout_marginBottom="20dp"/>
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="자동 전송 활성화"
-                android:textSize="16sp"
-                android:textColor="#ffffff"/>
-
-            <Switch
-                android:id="@+id/swEnabled"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
-
-        <!-- 서버 설정 카드 -->
+        <!-- 서버 설정 섹션 -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="서버 설정"
-            android:textSize="14sp"
-            android:textColor="#8888aa"
+            android:textColor="#aaaacc"
+            android:textSize="13sp"
             android:layout_marginBottom="8dp"/>
 
-        <LinearLayout
+        <EditText
+            android:id="@+id/etServerUrl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:hint="API 서버 주소"
+            android:textColorHint="#555577"
+            android:textColor="#ffffff"
             android:background="#1e1e2e"
-            android:padding="16dp"
-            android:layout_marginBottom="16dp">
+            android:padding="12dp"
+            android:inputType="textUri"
+            android:layout_marginBottom="10dp"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="API 서버 주소"
-                android:textSize="13sp"
-                android:textColor="#8888aa"
-                android:layout_marginBottom="6dp"/>
+        <EditText
+            android:id="@+id/etProjectId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="프로젝트 ID"
+            android:textColorHint="#555577"
+            android:textColor="#ffffff"
+            android:background="#1e1e2e"
+            android:padding="12dp"
+            android:inputType="number"
+            android:layout_marginBottom="16dp"/>
 
-            <EditText
-                android:id="@+id/etServerUrl"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="http://서버주소/obs/api.php"
-                android:textColor="#ffffff"
-                android:textColorHint="#555566"
-                android:background="#2a2a3e"
-                android:padding="12dp"
-                android:textSize="13sp"
-                android:inputType="textUri"
-                android:layout_marginBottom="12dp"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="프로젝트 ID"
-                android:textSize="13sp"
-                android:textColor="#8888aa"
-                android:layout_marginBottom="6dp"/>
-
-            <EditText
-                android:id="@+id/etProjectId"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="1"
-                android:textColor="#ffffff"
-                android:textColorHint="#555566"
-                android:background="#2a2a3e"
-                android:padding="12dp"
-                android:textSize="14sp"
-                android:inputType="number"/>
-        </LinearLayout>
-
-        <!-- 저장 버튼 -->
+        <!-- 설정 저장 버튼 -->
         <Button
             android:id="@+id/btnSave"
             android:layout_width="match_parent"
-            android:layout_height="54dp"
+            android:layout_height="wrap_content"
             android:text="설정 저장"
-            android:textSize="16sp"
-            android:textStyle="bold"
+            android:backgroundTint="#6c35de"
             android:textColor="#ffffff"
-            android:backgroundTint="#5c35cc"
-            android:layout_marginBottom="24dp"/>
+            android:textSize="16sp"
+            android:layout_marginBottom="12dp"/>
 
-        <!-- 수신 로그 -->
+        <!-- 구분선 -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#333355"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- 테스트 전송 버튼 -->
+        <Button
+            android:id="@+id/btnTest"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="🧪 서버 연결 테스트 전송"
+            android:backgroundTint="#1e8e3e"
+            android:textColor="#ffffff"
+            android:textSize="15sp"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- 배터리 최적화 제외 버튼 -->
+        <Button
+            android:id="@+id/btnBatteryOpt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="🔋 배터리 최적화 제외 설정"
+            android:backgroundTint="#e65c00"
+            android:textColor="#ffffff"
+            android:textSize="14sp"
+            android:layout_marginBottom="20dp"/>
+
+        <!-- 안내 텍스트 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="⚠️ SMS가 수신 안 되면:\n1. 배터리 최적화 제외 버튼 누르기\n2. 설정 > 앱 > 입금알림연동 > SMS 권한 허용\n3. 설정 > 배터리 > 백그라운드 제한 없음 설정"
+            android:textColor="#ffcc00"
+            android:textSize="12sp"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- 최근 수신 기록 -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="최근 수신 기록"
-            android:textSize="14sp"
-            android:textColor="#8888aa"
+            android:textColor="#aaaacc"
+            android:textSize="13sp"
             android:layout_marginBottom="8dp"/>
 
         <TextView
@@ -148,11 +145,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="아직 수신된 입금 문자가 없습니다."
-            android:textSize="12sp"
-            android:textColor="#aaaacc"
+            android:textColor="#ccccdd"
+            android:textSize="13sp"
             android:background="#1e1e2e"
-            android:padding="16dp"
-            android:fontFamily="monospace"/>
+            android:padding="12dp"/>
 
     </LinearLayout>
 </ScrollView>
