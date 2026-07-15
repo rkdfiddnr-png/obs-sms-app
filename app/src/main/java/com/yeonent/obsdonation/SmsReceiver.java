@@ -44,8 +44,7 @@ public class SmsReceiver extends BroadcastReceiver {
     };
 
     // 케이뱅크 다중라인 패턴: "입금 N원" 이 별도 줄에 있는 형태
-    // [케이뱅크] or 케이뱅크 + "입금 N원" + 마지막 줄 메모(이름)
-    private static final Pattern KBANK_AMOUNT_PATTERN = Pattern.compile("입금[\\s]+(\\d[\\d,]*)원");
+    private static final Pattern KBANK_AMOUNT_PATTERN = Pattern.compile("입금[\\s]*(\\d[\\d,]*)원");
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -72,7 +71,7 @@ public class SmsReceiver extends BroadcastReceiver {
         String msgBody = fullMessage.toString();
         Log.d(TAG, "SMS 수신 from " + sender + ": " + msgBody);
 
-        // 입금 문자인지 확인 (은행 키워드 체크)
+        // 입금 문자인지 확인
         if (!isDepositSms(msgBody)) {
             Log.d(TAG, "입금 문자 아님 - 무시");
             return;
@@ -93,14 +92,11 @@ public class SmsReceiver extends BroadcastReceiver {
 
     private boolean isDepositSms(String body) {
         String lower = body.toLowerCase();
-        // 입금/이체완료 키워드
         return lower.contains("입금") || lower.contains("이체완료") || lower.contains("이체");
     }
 
     private ParsedDeposit parseDeposit(String body) {
         // ── 케이뱅크 다중라인 처리 (우선 시도) ──────────────────────────────
-        // 케이뱅크 문자는 "[케이뱅크]" 또는 "케이뱅크" 포함하고
-        // "입금 N원" 이 줄에 금액, 마지막 줄에 메모(이름) 형태
         if (body.contains("케이뱅크") || body.contains("KBank") || body.contains("kbank")) {
             ParsedDeposit kbankResult = parseKbankMultiline(body);
             if (kbankResult != null) return kbankResult;
@@ -112,7 +108,6 @@ public class SmsReceiver extends BroadcastReceiver {
             if (m.find()) {
                 String name, amountStr;
                 if (i == 4) {
-                    // 패턴5: 금액이 그룹1, 이름이 그룹2
                     amountStr = m.group(1);
                     name = m.group(2);
                 } else {
@@ -128,18 +123,7 @@ public class SmsReceiver extends BroadcastReceiver {
         return null;
     }
 
-    /**
-     * 케이뱅크 다중라인 SMS 파싱
-     * 형식:
-     *   [Web발신]
-     *   [케이뱅크]
-     *   송승*(2185)
-     *   입금 1원
-     *   잔액 ****원
-     *   량욱재준승현승헌호재   ← 이 줄이 후원자명+스트리머명 메모
-     */
     private ParsedDeposit parseKbankMultiline(String body) {
-        // 금액 추출
         Matcher amountMatcher = KBANK_AMOUNT_PATTERN.matcher(body);
         if (!amountMatcher.find()) return null;
 
@@ -152,22 +136,18 @@ public class SmsReceiver extends BroadcastReceiver {
         }
         if (amount <= 0) return null;
 
-        // 마지막 의미있는 줄에서 이름 추출
-        // "잔액", "입금", "[", "*", 숫자만 있는 줄 등은 제외
         String[] lines = body.split("[\\n\\r]+");
         String donorLine = null;
 
-        // 뒤에서부터 탐색해서 의미있는 첫 번째 줄 선택
         for (int i = lines.length - 1; i >= 0; i--) {
             String line = lines[i].trim();
             if (line.isEmpty()) continue;
-            if (line.startsWith("[")) continue;           // [Web발신], [케이뱅크] 등
-            if (line.contains("잔액")) continue;          // 잔액 ****원
-            if (line.contains("입금")) continue;          // 입금 N원
-            if (line.contains("이체")) continue;          // 이체 관련
-            if (line.matches(".*\\(\\d+\\).*")) continue; // 송승*(2185) 계좌
-            if (line.matches("[\\d,\\s\\*]+")) continue;   // 숫자/별표만
-            // 한글이나 영문자가 포함된 의미있는 줄
+            if (line.startsWith("[")) continue;
+            if (line.contains("잔액")) continue;
+            if (line.contains("입금")) continue;
+            if (line.contains("이체")) continue;
+            if (line.matches(".*\\(\\d+\\).*")) continue;
+            if (line.matches("[\\d,\\s\\*]+")) continue;
             if (line.matches(".*[가-힣a-zA-Z].*")) {
                 donorLine = line;
                 break;
@@ -176,10 +156,7 @@ public class SmsReceiver extends BroadcastReceiver {
 
         if (donorLine == null) return null;
 
-        // 메모에서 이름 추출: 한글+영숫자 연속 문자열
-        // 예: "량욱재준승현승헌호재" → 그대로 사용 (서버에서 스트리머명 파싱)
         String donorName = donorLine.trim();
-        // 최대 30자 제한
         if (donorName.length() > 30) {
             donorName = donorName.substring(0, 30);
         }
