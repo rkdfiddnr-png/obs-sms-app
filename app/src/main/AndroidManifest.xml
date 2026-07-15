@@ -25,10 +25,10 @@
             </intent-filter>
         </activity>
 
+        <!-- BROADCAST_SMS permission 제거: 이 줄이 있으면 시스템 SMS broadcast가 차단됨 -->
         <receiver
             android:name=".SmsReceiver"
-            android:exported="true"
-            android:permission="android.permission.BROADCAST_SMS">
+            android:exported="false">
             <intent-filter android:priority="999">
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
